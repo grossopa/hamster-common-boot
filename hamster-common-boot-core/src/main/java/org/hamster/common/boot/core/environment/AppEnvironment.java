@@ -1,4 +1,4 @@
-package org.hamster.common.boot.environment;
+package org.hamster.common.boot.core.environment;
 
 /**
  * The default application environment for profile-based spring beans

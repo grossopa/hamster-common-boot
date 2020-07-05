@@ -1,4 +1,4 @@
-package org.hamster.common.boot.mail;
+package org.hamster.common.boot.core.mail;
 
 import lombok.SneakyThrows;
 import org.springframework.mail.MailException;
@@ -13,7 +13,8 @@ import static java.util.Arrays.stream;
 import static java.util.Objects.requireNonNull;
 
 /**
- * The default wrapper of {@link org.springframework.mail.javamail.JavaMailSender}
+ * The override recipients wrapper of {@link JavaMailSender}, it will override the recipients to configured ones
+ * e.g. in non-production environment the email should go to development / support team instead of users.
  *
  * @author Jack Yin
  * @since 1.0
@@ -23,15 +24,15 @@ public class OverrideRecipientsMailSender implements JavaMailSender {
     private final OverrideRecipientsAction action;
 
     /**
-     * Constructs an instance with javaMailSender and overriding details.
+     * Constructs an instance with javaMailSender and overriding recipients details.
      *
      * @param javaMailSender the decorated javaMailSender instance
      * @param overrideTo the to list to override
      * @param overrideCc the cc list to override
      * @param overrideBcc the bcc list to override
      */
-    public OverrideRecipientsMailSender(JavaMailSender javaMailSender,
-                                        String[] overrideTo, String[] overrideCc, String[] overrideBcc) {
+    public OverrideRecipientsMailSender(JavaMailSender javaMailSender, String[] overrideTo, String[] overrideCc,
+            String[] overrideBcc) {
         this.javaMailSender = requireNonNull(javaMailSender);
         this.action = new OverrideRecipientsAction(overrideTo, overrideCc, overrideBcc);
     }
@@ -73,8 +74,7 @@ public class OverrideRecipientsMailSender implements JavaMailSender {
     @Override
     public void send(MimeMessagePreparator... mimeMessagePreparators) throws MailException {
         MimeMessagePreparator[] overridePreparators = stream(mimeMessagePreparators)
-                .map(p -> new OverrideRecipientsMimeMessagePreparator(p, action))
-                .toArray(MimeMessagePreparator[]::new);
+                .map(p -> new OverrideRecipientsMimeMessagePreparator(p, action)).toArray(MimeMessagePreparator[]::new);
         javaMailSender.send(overridePreparators);
     }
 

@@ -1,4 +1,4 @@
-package org.hamster.common.boot.mail;
+package org.hamster.common.boot.core.mail;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,7 +10,6 @@ import javax.mail.internet.MimeMessage;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import static org.mockito.ArgumentMatchers.*;
 
 /**
  * Tests for {@link OverrideRecipientsAction}

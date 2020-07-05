@@ -1,4 +1,4 @@
-package org.hamster.common.boot.mail;
+package org.hamster.common.boot.core.mail;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
