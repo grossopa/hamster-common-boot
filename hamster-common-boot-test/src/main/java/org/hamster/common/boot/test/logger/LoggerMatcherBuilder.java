@@ -1,5 +1,6 @@
 package org.hamster.common.boot.test.logger;
 
+import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -16,21 +17,49 @@ public abstract class LoggerMatcherBuilder {
 
     protected final Logger logger;
 
-    public static LoggerMatcherBuilder logback(Logger logger) {
+    /**
+     * Builds and Creates the {@link LogbackLoggerMatcher} instance with the given Slf4j Logger.
+     *
+     * @param logger
+     *         the Slf4j logger to create the matcher with
+     * @return the builder instance
+     */
+    public static LogbackLoggerMatcherBuilder logback(Logger logger) {
         return new LogbackLoggerMatcherBuilder(logger);
     }
 
-    public static LoggerMatcherBuilder logback(Class<?> clazz) {
+    /**
+     * Builds and Creates the {@link LogbackLoggerMatcher} instance with the given target class.
+     *
+     * @param clazz
+     *         the Slf4j logger target class to create the matcher with
+     * @return the builder instance
+     */
+    public static LogbackLoggerMatcherBuilder logback(Class<?> clazz) {
         return new LogbackLoggerMatcherBuilder(LoggerFactory.getLogger(clazz));
     }
 
-    public static LoggerMatcherBuilder logback(String loggerName) {
+    /**
+     * Builds and Creates the {@link LogbackLoggerMatcher} instance with the given Slf4j Logger name.
+     *
+     * @param loggerName
+     *         the Slf4j logger target name to create the matcher with
+     * @return the builder instance
+     */
+    public static LogbackLoggerMatcherBuilder logback(String loggerName) {
         return new LogbackLoggerMatcherBuilder(LoggerFactory.getLogger(loggerName));
     }
 
+    /**
+     * Builds the {@link LoggerMatcher} instance.
+     *
+     * @param start
+     *         whether starts the logging immediately.
+     * @return built {@link LoggerMatcher} instance
+     */
     public abstract LoggerMatcher<?> build(boolean start);
 
-    static class LogbackLoggerMatcherBuilder extends LoggerMatcherBuilder {
+    public static class LogbackLoggerMatcherBuilder extends LoggerMatcherBuilder {
 
         public LogbackLoggerMatcherBuilder(Logger logger) {
             super(logger);
@@ -48,6 +77,7 @@ public abstract class LoggerMatcherBuilder {
             }
             return matcher;
         }
+
     }
 
 

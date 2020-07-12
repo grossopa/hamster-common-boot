@@ -30,7 +30,9 @@ import static org.apache.commons.lang3.StringUtils.join;
  * @author Jack Yin
  * @since 1.0
  */
-@Slf4j @RequiredArgsConstructor public class LogMailSender extends JavaMailSenderImpl {
+@Slf4j
+@RequiredArgsConstructor
+public class LogMailSender extends JavaMailSenderImpl {
 
     private static final String SEP = "; ";
 
@@ -38,7 +40,8 @@ import static org.apache.commons.lang3.StringUtils.join;
     @Override
     public void send(MimeMessage mimeMessage) throws MailException {
         doPrint(findFrom(mimeMessage.getFrom()), mimeMessage.getRecipients(TO), mimeMessage.getRecipients(CC),
-                mimeMessage.getRecipients(BCC), mimeMessage.getSubject(), "<Skip the content printing for MimeMessage>");
+                mimeMessage.getRecipients(BCC), mimeMessage.getSubject(),
+                "<Skip the content printing for MimeMessage>");
     }
 
     @Override
@@ -64,9 +67,9 @@ import static org.apache.commons.lang3.StringUtils.join;
     private void doPrint(String from, Object[] to, Object[] cc, Object[] bcc, String subject, String text) {
         StringBuilder sb = new StringBuilder();
         sb.append("Mute the email sending and print them in log.").append("\n    From: ").append(from)
-          .append("\n    To  : ").append(join(to, SEP)).append("\n    Cc  : ").append(join(cc, SEP))
-          .append("\n    Bcc : ").append(join(bcc, SEP)).append("\n    Subject : " + subject)
-          .append("\n    Text:\n" + text);
+                .append("\n    To  : ").append(join(to, SEP)).append("\n    Cc  : ").append(join(cc, SEP))
+                .append("\n    Bcc : ").append(join(bcc, SEP)).append("\n    Subject : " + subject)
+                .append("\n    Text:\n      " + text);
         log.info(sb.toString());
     }
 
