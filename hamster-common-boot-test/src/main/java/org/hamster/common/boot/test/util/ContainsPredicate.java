@@ -1,6 +1,5 @@
 package org.hamster.common.boot.test.util;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -15,12 +14,11 @@ import static org.apache.commons.lang3.StringUtils.containsIgnoreCase;
  * @author Jack Yin
  * @since 1.0
  */
-@AllArgsConstructor
 @RequiredArgsConstructor
 public class ContainsPredicate implements Predicate<String> {
 
     private final List<String> keywords;
-    private boolean ignoreCase = false;
+    private final boolean ignoreCase;
 
     @Override
     public boolean test(String str) {

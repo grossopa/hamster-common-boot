@@ -22,6 +22,11 @@ public class LogbackMemoryAppender extends AppenderBase<ILoggingEvent> {
         eventList.add(iLoggingEvent);
     }
 
+    /**
+     * Gets the event list
+     *
+     * @return the event list
+     */
     public List<ILoggingEvent> getEventList() {
         return eventList;
     }

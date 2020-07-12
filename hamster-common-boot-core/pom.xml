@@ -8,7 +8,6 @@
     <artifactId>hamster-common-boot</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
-  <groupId>org.hamster</groupId>
   <artifactId>hamster-common-boot-core</artifactId>
   <version>1.0-SNAPSHOT</version>
   <name>hamster-common-boot-core</name>
@@ -19,7 +18,6 @@
   </properties>
 
   <dependencies>
-
     <!-- Spring Boot related dependencies -->
     <dependency>
       <groupId>org.springframework.boot</groupId>

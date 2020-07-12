@@ -3,6 +3,7 @@ package org.hamster.common.boot.core.mail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 
+import javax.annotation.Nonnull;
 import javax.mail.internet.MimeMessage;
 
 /**
@@ -18,7 +19,7 @@ public class OverrideRecipientsMimeMessagePreparator implements MimeMessagePrepa
     private final OverrideRecipientsAction action;
 
     @Override
-    public void prepare(MimeMessage mimeMessage) throws Exception {
+    public void prepare(@Nonnull MimeMessage mimeMessage) throws Exception {
         messagePreparator.prepare(mimeMessage);
         action.prepare(mimeMessage);
     }
