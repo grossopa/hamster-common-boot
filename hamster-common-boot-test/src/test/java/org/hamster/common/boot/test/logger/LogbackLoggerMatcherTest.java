@@ -1,9 +1,11 @@
 package org.hamster.common.boot.test.logger;
 
 import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.regex.Pattern;
@@ -36,7 +38,8 @@ class LogbackLoggerMatcherTest {
 
         when(appender.getEventList()).thenReturn(eventList);
 
-        testSubject = new LogbackLoggerMatcher(appender);
+        testSubject = new LogbackLoggerMatcher((Logger) LoggerFactory.getLogger(LogbackLoggerMatcherTest.class),
+                appender);
     }
 
 

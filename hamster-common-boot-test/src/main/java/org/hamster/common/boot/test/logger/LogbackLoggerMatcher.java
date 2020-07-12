@@ -1,5 +1,6 @@
 package org.hamster.common.boot.test.logger;
 
+import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.util.CollectionUtils;
@@ -22,8 +23,9 @@ import static org.apache.commons.lang3.StringUtils.*;
  * @since 1.0
  */
 @RequiredArgsConstructor
-public class LogbackLoggerMatcher implements LoggerMatcher {
+public class LogbackLoggerMatcher implements LoggerMatcher<ILoggingEvent> {
 
+    private final Logger logger;
     private final LogbackMemoryAppender appender;
 
     @Override
@@ -66,6 +68,27 @@ public class LogbackLoggerMatcher implements LoggerMatcher {
     public void verify(Pattern pattern, int index, String level, boolean negative) {
         doVerify(event -> pattern.matcher(event.getFormattedMessage()).find(), getList(index), index, level, negative,
                 pattern.toString());
+    }
+
+    @Override
+    public void start() {
+        appender.start();
+    }
+
+    @Override
+    public void stop() {
+        appender.stop();
+    }
+
+    @Override
+    public void terminate() {
+        stop();
+        logger.detachAppender(appender);
+    }
+
+    @Override
+    public List<ILoggingEvent> getEventList() {
+        return newArrayList(appender.getEventList());
     }
 
     protected void doVerify(Function<ILoggingEvent, Boolean> action, List<ILoggingEvent> eventList, int index,

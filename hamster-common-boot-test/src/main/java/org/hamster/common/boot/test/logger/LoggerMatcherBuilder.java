@@ -1,14 +1,9 @@
 package org.hamster.common.boot.test.logger;
 
-import lombok.Getter;
+import ch.qos.logback.classic.spi.ILoggingEvent;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
-import java.util.function.Predicate;
-
-import static com.google.common.collect.Lists.newArrayList;
 
 /**
  * Builds an instance of {@link LoggerMatcher}
@@ -19,15 +14,21 @@ import static com.google.common.collect.Lists.newArrayList;
 @RequiredArgsConstructor
 public abstract class LoggerMatcherBuilder {
 
-    private final Logger logger;
+    protected final Logger logger;
 
-    List<ContainsMatch> matchList = newArrayList();
+    public static LoggerMatcherBuilder logback(Logger logger) {
+        return new LogbackLoggerMatcherBuilder(logger);
+    }
 
     public static LoggerMatcherBuilder logback(Class<?> clazz) {
         return new LogbackLoggerMatcherBuilder(LoggerFactory.getLogger(clazz));
     }
 
-    public abstract LoggerMatcher build();
+    public static LoggerMatcherBuilder logback(String loggerName) {
+        return new LogbackLoggerMatcherBuilder(LoggerFactory.getLogger(loggerName));
+    }
+
+    public abstract LoggerMatcher<?> build(boolean start);
 
     static class LogbackLoggerMatcherBuilder extends LoggerMatcherBuilder {
 
@@ -36,8 +37,16 @@ public abstract class LoggerMatcherBuilder {
         }
 
         @Override
-        public LoggerMatcher build() {
-            return null;
+        public LoggerMatcher<ILoggingEvent> build(boolean start) {
+            ch.qos.logback.classic.Logger logbackLogger = (ch.qos.logback.classic.Logger) logger;
+            LogbackMemoryAppender appender = new LogbackMemoryAppender();
+            appender.setContext(logbackLogger.getLoggerContext());
+            logbackLogger.addAppender(appender);
+            LogbackLoggerMatcher matcher = new LogbackLoggerMatcher(logbackLogger, appender);
+            if (start) {
+                matcher.start();
+            }
+            return matcher;
         }
     }
 
