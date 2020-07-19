@@ -57,10 +57,9 @@ public class LogMailSender extends JavaMailSenderImpl {
     }
 
     private void doPrint(String from, Object[] to, Object[] cc, Object[] bcc, String subject, String text) {
-        String sb =
-                "Mute the email sending and print them in log." + "\n    From: " + from + "\n    To  : " + join(to, SEP)
-                        + "\n    Cc  : " + join(cc, SEP) + "\n    Bcc : " + join(bcc, SEP) + "\n    Subject : "
-                        + subject + "\n    Text:\n      " + text;
+        String sb = "Mute the email sending and print them in log." + "\n    From: " + from + "\n    To  : " + join(to,
+                SEP) + "\n    Cc  : " + join(cc, SEP) + "\n    Bcc : " + join(bcc,
+                SEP) + "\n    Subject : " + subject + "\n    Text:\n      " + text;
         log.info(sb);
     }
 

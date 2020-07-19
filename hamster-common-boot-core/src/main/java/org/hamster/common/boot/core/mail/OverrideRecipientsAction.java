@@ -33,16 +33,20 @@ public class OverrideRecipientsAction {
     private final String[] overrideBcc;
 
     /**
-     * Constructs an instance with override to list, override cc list and / or override bcc list.
-     * at least one must be present.
+     * Constructs an instance with override to list, override cc list and / or override bcc list. at least one must be
+     * present.
      *
-     * @param overrideTo the mail to list to be overridden
-     * @param overrideCc the mail cc list to be overridden
-     * @param overrideBcc the mail bcc list to be overridden
+     * @param overrideTo
+     *         the mail to list to be overridden
+     * @param overrideCc
+     *         the mail cc list to be overridden
+     * @param overrideBcc
+     *         the mail bcc list to be overridden
      */
     public OverrideRecipientsAction(String[] overrideTo, String[] overrideCc, String[] overrideBcc) {
         if (isEmpty(overrideTo) && isEmpty(overrideCc) && isEmpty(overrideBcc)) {
-            throw new IllegalArgumentException("At least one of overrideTo, overrideCC or overrideBcc need to be present.");
+            throw new IllegalArgumentException(
+                    "At least one of overrideTo, overrideCC or overrideBcc need to be present.");
         }
         this.overrideTo = defaultIfNull(overrideTo, new String[0]);
         this.overrideCc = defaultIfNull(overrideCc, new String[0]);
@@ -50,10 +54,10 @@ public class OverrideRecipientsAction {
     }
 
     /**
-     * Overrides the to, cc and bcc list of the given {@link MimeMessage} with the help of
-     * {@link MimeMessageHelper}.
+     * Overrides the to, cc and bcc list of the given {@link MimeMessage} with the help of {@link MimeMessageHelper}.
      *
-     * @param mimeMessage the message to enrich
+     * @param mimeMessage
+     *         the message to enrich
      */
     public void prepare(MimeMessage mimeMessage) throws MessagingException {
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
@@ -69,13 +73,13 @@ public class OverrideRecipientsAction {
     /**
      * Overrides the co, cc and bcc list of the given {@link SimpleMailMessage}.
      *
-     * @param simpleMailMessage the message to enrich
+     * @param simpleMailMessage
+     *         the message to enrich
      */
     public void prepare(SimpleMailMessage simpleMailMessage) {
         log.info("Overriding the receipts, to: {} -> {}, cc: {} -> {}, bcc: {} -> {}",
-                join(simpleMailMessage.getTo(), SEP), join(overrideTo, SEP),
-                join(simpleMailMessage.getCc(), SEP), join(overrideCc, SEP),
-                join(simpleMailMessage.getBcc(), SEP), join(overrideBcc, SEP));
+                join(simpleMailMessage.getTo(), SEP), join(overrideTo, SEP), join(simpleMailMessage.getCc(), SEP),
+                join(overrideCc, SEP), join(simpleMailMessage.getBcc(), SEP), join(overrideBcc, SEP));
         simpleMailMessage.setTo(overrideTo);
         simpleMailMessage.setCc(overrideCc);
         simpleMailMessage.setBcc(overrideBcc);

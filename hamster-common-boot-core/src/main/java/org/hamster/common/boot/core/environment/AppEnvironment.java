@@ -10,5 +10,9 @@ public enum AppEnvironment {
     /**
      * The development environment
      */
-    DEVELOPMENT, LOCAL, QA, STAGE, PRODUCTION;
+    DEVELOPMENT,
+    /**
+     * The local environment
+     */
+    LOCAL, QA, STAGE, PRODUCTION
 }

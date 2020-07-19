@@ -23,14 +23,14 @@ class OverrideRecipientsActionTest {
 
     @BeforeEach
     void setUp() {
-        testSubject = new OverrideRecipientsAction(
-                new String[]{"a@hamster.com"}, new String[]{"b@hamster.com"}, new String[]{"c@hamster.com", "c2@hamster.com"});
+        testSubject = new OverrideRecipientsAction(new String[]{"a@hamster.com"}, new String[]{"b@hamster.com"},
+                new String[]{"c@hamster.com", "c2@hamster.com"});
     }
 
     @Test
     void constructor1() {
-        testSubject = new OverrideRecipientsAction(
-                new String[]{"a@hamster.com"}, new String[]{"b@hamster.com"}, new String[]{"c@hamster.com", "c2@hamster.com"});
+        testSubject = new OverrideRecipientsAction(new String[]{"a@hamster.com"}, new String[]{"b@hamster.com"},
+                new String[]{"c@hamster.com", "c2@hamster.com"});
         assertArrayEquals(new String[]{"a@hamster.com"}, testSubject.getOverrideTo());
         assertArrayEquals(new String[]{"b@hamster.com"}, testSubject.getOverrideCc());
         assertArrayEquals(new String[]{"c@hamster.com", "c2@hamster.com"}, testSubject.getOverrideBcc());
@@ -38,8 +38,8 @@ class OverrideRecipientsActionTest {
 
     @Test
     void constructor2() {
-        testSubject = new OverrideRecipientsAction(
-                null, new String[]{"b@hamster.com"}, new String[]{"c@hamster.com", "c2@hamster.com"});
+        testSubject = new OverrideRecipientsAction(null, new String[]{"b@hamster.com"},
+                new String[]{"c@hamster.com", "c2@hamster.com"});
         assertArrayEquals(new String[]{}, testSubject.getOverrideTo());
         assertArrayEquals(new String[]{"b@hamster.com"}, testSubject.getOverrideCc());
         assertArrayEquals(new String[]{"c@hamster.com", "c2@hamster.com"}, testSubject.getOverrideBcc());
@@ -47,8 +47,7 @@ class OverrideRecipientsActionTest {
 
     @Test
     void constructor3() {
-        testSubject = new OverrideRecipientsAction(
-                null, null, new String[]{"c@hamster.com", "c2@hamster.com"});
+        testSubject = new OverrideRecipientsAction(null, null, new String[]{"c@hamster.com", "c2@hamster.com"});
         assertArrayEquals(new String[]{}, testSubject.getOverrideTo());
         assertArrayEquals(new String[]{}, testSubject.getOverrideCc());
         assertArrayEquals(new String[]{"c@hamster.com", "c2@hamster.com"}, testSubject.getOverrideBcc());
@@ -73,8 +72,7 @@ class OverrideRecipientsActionTest {
 
     @Test
     void prepare2() {
-        testSubject = new OverrideRecipientsAction(
-                null, null, new String[]{"c@hamster.com", "c2@hamster.com"});
+        testSubject = new OverrideRecipientsAction(null, null, new String[]{"c@hamster.com", "c2@hamster.com"});
         SimpleMailMessage message = mock(SimpleMailMessage.class);
         testSubject.prepare(message);
         verify(message, times(1)).setBcc(eq("c@hamster.com"), eq("c2@hamster.com"));
