@@ -15,23 +15,23 @@ import static java.util.Objects.requireNonNull;
  */
 @Getter
 public class PropertyValidationInfo {
-    private final String name;
+    private final String propertyName;
     private final PropertyRule rule;
     private final PropertyValidatingResultType failureResultLevel;
 
     /**
      * Constructs an instance with name, rule and expected failure result level.
      *
-     * @param name
-     *         the display name of the validation information
+     * @param propertyName
+     *         the target property name
      * @param rule
      *         the detailed rule of the validation
      * @param failureResultLevel
      *         result level when validation failed
      */
-    public PropertyValidationInfo(@Nonnull String name, @Nonnull PropertyRule rule,
+    public PropertyValidationInfo(@Nonnull String propertyName, @Nonnull PropertyRule rule,
             @Nonnull PropertyValidatingResultType failureResultLevel) {
-        this.name = requireNonNull(name);
+        this.propertyName = requireNonNull(propertyName);
         this.rule = requireNonNull(rule);
         this.failureResultLevel = requireNonNull(failureResultLevel);
     }

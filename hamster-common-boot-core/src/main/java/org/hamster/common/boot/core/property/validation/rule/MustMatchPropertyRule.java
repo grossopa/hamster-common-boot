@@ -38,7 +38,7 @@ public class MustMatchPropertyRule implements PropertyRule {
     @Nonnull
     @Override
     public String getFailureMessage(String propertyName, String propertyValue) {
-        return format("The property {0} with value {1} does not match the expected pattern {2}", propertyName,
+        return format("The property \"{0}\" with value \"{1}\" does not match the expected pattern {2}", propertyName,
                 propertyValue, pattern);
     }
 

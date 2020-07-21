@@ -32,7 +32,7 @@ class MustMatchPropertyRuleTest {
     @Test
     void getFailureMessage() {
         assertEquals(
-                "The property some_property with value some_value does not match the expected pattern ^some[0-9]{3}$",
+                "The property \"some_property\" with value \"some_value\" does not match the expected pattern ^some[0-9]{3}$",
                 testSubject.getFailureMessage("some_property", "some_value"));
     }
 

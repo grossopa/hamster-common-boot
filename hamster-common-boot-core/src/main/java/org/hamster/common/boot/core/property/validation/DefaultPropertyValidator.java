@@ -28,7 +28,7 @@ public class DefaultPropertyValidator implements PropertyValidator {
      *         the property validation information list for validation
      */
     public DefaultPropertyValidator(@Nonnull List<PropertyValidationInfo> infoList) {
-        this.infoList = requireNonNull(infoList).stream().collect(groupingBy(PropertyValidationInfo::getName));
+        this.infoList = requireNonNull(infoList).stream().collect(groupingBy(PropertyValidationInfo::getPropertyName));
     }
 
     @Override
