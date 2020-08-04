@@ -2,7 +2,6 @@ package org.hamster.common.boot.core.property.validation.rule;
 
 import lombok.Getter;
 
-import javax.annotation.Nonnull;
 import java.util.regex.Pattern;
 
 import static java.text.MessageFormat.format;
@@ -25,17 +24,15 @@ public class MustMatchPropertyRule implements PropertyRule {
      * @param pattern
      *         the pattern for {@link #apply(String)} method to validate property value.
      */
-    public MustMatchPropertyRule(@Nonnull Pattern pattern) {
+    public MustMatchPropertyRule(Pattern pattern) {
         this.pattern = requireNonNull(pattern);
     }
 
-    @Nonnull
     @Override
     public String getName() {
         return "Must match the pattern";
     }
 
-    @Nonnull
     @Override
     public String getFailureMessage(String propertyName, String propertyValue) {
         return format("The property \"{0}\" with value \"{1}\" does not match the expected pattern {2}", propertyName,

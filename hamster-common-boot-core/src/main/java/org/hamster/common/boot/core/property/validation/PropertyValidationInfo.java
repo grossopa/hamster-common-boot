@@ -3,8 +3,6 @@ package org.hamster.common.boot.core.property.validation;
 import lombok.Getter;
 import org.hamster.common.boot.core.property.validation.rule.PropertyRule;
 
-import javax.annotation.Nonnull;
-
 import static java.util.Objects.requireNonNull;
 
 /**
@@ -29,8 +27,8 @@ public class PropertyValidationInfo {
      * @param failureResultLevel
      *         result level when validation failed
      */
-    public PropertyValidationInfo(@Nonnull String propertyName, @Nonnull PropertyRule rule,
-            @Nonnull PropertyValidatingResultType failureResultLevel) {
+    public PropertyValidationInfo(String propertyName, PropertyRule rule,
+            PropertyValidatingResultType failureResultLevel) {
         this.propertyName = requireNonNull(propertyName);
         this.rule = requireNonNull(rule);
         this.failureResultLevel = requireNonNull(failureResultLevel);

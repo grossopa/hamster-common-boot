@@ -1,6 +1,5 @@
 package org.hamster.common.boot.core.property.validation;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -27,7 +26,7 @@ public class DefaultPropertyValidator implements PropertyValidator {
      * @param infoList
      *         the property validation information list for validation
      */
-    public DefaultPropertyValidator(@Nonnull List<PropertyValidationInfo> infoList) {
+    public DefaultPropertyValidator(List<PropertyValidationInfo> infoList) {
         this.infoList = requireNonNull(infoList).stream().collect(groupingBy(PropertyValidationInfo::getPropertyName));
     }
 

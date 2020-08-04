@@ -1,7 +1,5 @@
 package org.hamster.common.boot.core.property.validation.rule;
 
-import javax.annotation.Nonnull;
-
 import static java.text.MessageFormat.format;
 
 /**
@@ -12,13 +10,11 @@ import static java.text.MessageFormat.format;
  */
 public class NoOpPropertyRule implements PropertyRule {
 
-    @Nonnull
     @Override
     public String getName() {
         return "No Operation";
     }
 
-    @Nonnull
     @Override
     public String getFailureMessage(String propertyName, String propertyValue) {
         return format("No Operations for {0}", propertyName);

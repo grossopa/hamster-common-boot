@@ -18,7 +18,6 @@ public interface PropertyRule extends Function<String, Boolean> {
      *
      * @return the name of the rule.
      */
-    @Nonnull
     String getName();
 
     /**
@@ -26,6 +25,5 @@ public interface PropertyRule extends Function<String, Boolean> {
      *
      * @return the formatted message
      */
-    @Nonnull
     String getFailureMessage(String propertyName, String propertyValue);
 }
