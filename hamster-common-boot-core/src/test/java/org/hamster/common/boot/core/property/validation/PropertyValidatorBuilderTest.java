@@ -32,7 +32,6 @@ class PropertyValidatorBuilderTest {
         testSubject = new PropertyValidatorBuilder();
     }
 
-
     @Test
     void builderSimple() {
         PropertyValidator propertyValidator = testSubject
@@ -72,6 +71,36 @@ class PropertyValidatorBuilderTest {
     }
 
     @Test
+    void testSimpleDefaultType() {
+        PropertyValidator propertyValidator = testSubject
+                // 1.2.
+                .properties("some-properties.1", "some-properties.2").mustExist().mustMatch("SomePropertiesValue123")
+                .and()
+                // 3.
+                .properties("some-properties.3").mustNotExist().and()
+                // 4.
+                .properties("some-properties.4").mustMatch(compile("^[0-9]+$")).and()
+                // 5.
+                .properties("some-properties.5").mustExist().and().build();
+
+        List<PropertyValidatingResult> results = propertyValidator
+                .validate(ImmutableMap.of("some-properties.4", "123"));
+        Map<String, List<PropertyValidatingResult>> map = results.stream()
+                .collect(groupingBy(PropertyValidatingResult::getPropertyName));
+
+        assertEquals(newHashSet(ERROR),
+                map.get("some-properties.1").stream().map(PropertyValidatingResult::getType).collect(toSet()));
+        assertEquals(newHashSet(ERROR),
+                map.get("some-properties.2").stream().map(PropertyValidatingResult::getType).collect(toSet()));
+        assertEquals(newHashSet(SUCCESS),
+                map.get("some-properties.3").stream().map(PropertyValidatingResult::getType).collect(toSet()));
+        assertEquals(newHashSet(SUCCESS),
+                map.get("some-properties.4").stream().map(PropertyValidatingResult::getType).collect(toSet()));
+        assertEquals(newHashSet(ERROR),
+                map.get("some-properties.5").stream().map(PropertyValidatingResult::getType).collect(toSet()));
+    }
+
+    @Test
     void add() {
         testSubject.add(new PropertyValidationInfo("abc", new MustExistPropertyRule(), ERROR));
         List<PropertyValidatingResult> results = testSubject.build().validate(ImmutableMap.of());
@@ -98,7 +127,35 @@ class PropertyValidatorBuilderTest {
             public Boolean apply(String s) {
                 return "aaaa".equals(s);
             }
-        }, ERROR).build();
+        }, WARN).build();
+
+        List<PropertyValidatingResult> results = propertyValidator.validate(ImmutableMap.of("abc", "bbbb"));
+        assertEquals(WARN, results.get(0).getType());
+
+        List<PropertyValidatingResult> results2 = propertyValidator.validate(ImmutableMap.of("abc", "aaaa"));
+        assertEquals(SUCCESS, results2.get(0).getType());
+    }
+
+    @Test
+    void customRuleDefaultType() {
+        PropertyValidator propertyValidator = testSubject.properties("abc").custom(new PropertyRule() {
+            @Nonnull
+            @Override
+            public String getName() {
+                return "some-property-rule";
+            }
+
+            @Nonnull
+            @Override
+            public String getFailureMessage(String propertyName, String propertyValue) {
+                return "failure message " + propertyName + "," + propertyValue;
+            }
+
+            @Override
+            public Boolean apply(String s) {
+                return "aaaa".equals(s);
+            }
+        }).build();
 
         List<PropertyValidatingResult> results = propertyValidator.validate(ImmutableMap.of("abc", "bbbb"));
         assertEquals(ERROR, results.get(0).getType());
@@ -106,4 +163,6 @@ class PropertyValidatorBuilderTest {
         List<PropertyValidatingResult> results2 = propertyValidator.validate(ImmutableMap.of("abc", "aaaa"));
         assertEquals(SUCCESS, results2.get(0).getType());
     }
+
+
 }

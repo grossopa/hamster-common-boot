@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static org.hamster.common.boot.core.property.validation.PropertyValidatingResultType.ERROR;
 
 /**
  * The builder for building {@link PropertyValidator}
@@ -74,6 +75,18 @@ public class PropertyValidatorBuilder {
         /**
          * Adds the {@link MustExistPropertyRule} validation for specified properties. The properties must exist and has
          * a non-blank value.
+         * <br>
+         * The failure result type is {@link PropertyValidatingResultType#ERROR}
+         *
+         * @return this builder instance
+         */
+        public PropertyValidatorPropertyBuilder mustExist() {
+            return mustExist(ERROR);
+        }
+
+        /**
+         * Adds the {@link MustExistPropertyRule} validation for specified properties. The properties must exist and has
+         * a non-blank value.
          *
          * @param failureResultType
          *         the result type if validation fails
@@ -84,6 +97,18 @@ public class PropertyValidatorBuilder {
                 parent.add(new PropertyValidationInfo(propertyName, new MustExistPropertyRule(), failureResultType));
             }
             return this;
+        }
+
+        /**
+         * Adds the {@link MustNotExistPropertyRule} validation for speficied properties, the properties must not exist
+         * or has a blank value.
+         * <br>
+         * The failure result type is {@link PropertyValidatingResultType#ERROR}
+         *
+         * @return this builder instance
+         */
+        public PropertyValidatorPropertyBuilder mustNotExist() {
+            return mustNotExist(ERROR);
         }
 
         /**
@@ -104,6 +129,20 @@ public class PropertyValidatorBuilder {
         /**
          * Adds the {@link MustMatchPropertyRule} validation for specified properties. The properties must match the
          * given regular expression.
+         * <br>
+         * The failure result type is {@link PropertyValidatingResultType#ERROR}
+         *
+         * @param pattern
+         *         the pattern in String format
+         * @return this builder instance
+         */
+        public PropertyValidatorPropertyBuilder mustMatch(String pattern) {
+            return mustMatch(Pattern.compile(pattern), ERROR);
+        }
+
+        /**
+         * Adds the {@link MustMatchPropertyRule} validation for specified properties. The properties must match the
+         * given regular expression.
          *
          * @param pattern
          *         the pattern in String format
@@ -114,6 +153,20 @@ public class PropertyValidatorBuilder {
         public PropertyValidatorPropertyBuilder mustMatch(String pattern,
                 PropertyValidatingResultType failureResultType) {
             return mustMatch(Pattern.compile(pattern), failureResultType);
+        }
+
+        /**
+         * Adds the {@link MustMatchPropertyRule} validation for specified properties. The properties must match the
+         * given regular expression.
+         * <br>
+         * The failure result type is {@link PropertyValidatingResultType#ERROR}
+         *
+         * @param pattern
+         *         the {@link Pattern} instance
+         * @return this builder instance
+         */
+        public PropertyValidatorPropertyBuilder mustMatch(Pattern pattern) {
+            return mustMatch(pattern, ERROR);
         }
 
         /**
@@ -133,6 +186,19 @@ public class PropertyValidatorBuilder {
                         failureResultType));
             }
             return this;
+        }
+
+        /**
+         * Adds a custom {@link PropertyRule} validation for specified properties.
+         * <br>
+         * The failure result type is {@link PropertyValidatingResultType#ERROR}
+         *
+         * @param customRule
+         *         the custom rule
+         * @return the builder instance
+         */
+        public PropertyValidatorPropertyBuilder custom(PropertyRule customRule) {
+            return custom(customRule, ERROR);
         }
 
         /**
