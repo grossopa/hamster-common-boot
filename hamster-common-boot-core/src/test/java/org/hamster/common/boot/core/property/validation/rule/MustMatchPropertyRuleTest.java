@@ -47,6 +47,11 @@ class MustMatchPropertyRuleTest {
     }
 
     @Test
+    void applyNullNegative() {
+        assertFalse(testSubject.apply(null));
+    }
+
+    @Test
     void getPattern() {
         assertEquals(Pattern.compile("^some[0-9]{3}$").toString(), testSubject.getPattern().toString());
     }

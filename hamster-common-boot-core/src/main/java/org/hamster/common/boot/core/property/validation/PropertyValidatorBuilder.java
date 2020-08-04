@@ -3,6 +3,8 @@ package org.hamster.common.boot.core.property.validation;
 import lombok.RequiredArgsConstructor;
 import org.hamster.common.boot.core.property.validation.rule.MustExistPropertyRule;
 import org.hamster.common.boot.core.property.validation.rule.MustMatchPropertyRule;
+import org.hamster.common.boot.core.property.validation.rule.MustNotExistPropertyRule;
+import org.hamster.common.boot.core.property.validation.rule.PropertyRule;
 
 import java.util.List;
 import java.util.regex.Pattern;
@@ -34,7 +36,7 @@ public class PropertyValidatorBuilder {
      * @param info
      *         the instance of {@link PropertyValidationInfo} to build
      */
-    void add(PropertyValidationInfo info) {
+    public void add(PropertyValidationInfo info) {
         allInfoList.add(info);
     }
 
@@ -47,6 +49,15 @@ public class PropertyValidatorBuilder {
      */
     public PropertyValidatorPropertyBuilder properties(String... properties) {
         return new PropertyValidatorPropertyBuilder(this, properties);
+    }
+
+    /**
+     * Builds the {@link PropertyValidator} instance.
+     *
+     * @return the built {@link PropertyValidator} instance.
+     */
+    public PropertyValidator build() {
+        return new DefaultPropertyValidator(allInfoList);
     }
 
     /**
@@ -66,11 +77,26 @@ public class PropertyValidatorBuilder {
          *
          * @param failureResultType
          *         the result type if validation fails
-         * @return this instance
+         * @return this builder instance
          */
         public PropertyValidatorPropertyBuilder mustExist(PropertyValidatingResultType failureResultType) {
             for (String propertyName : properties) {
                 parent.add(new PropertyValidationInfo(propertyName, new MustExistPropertyRule(), failureResultType));
+            }
+            return this;
+        }
+
+        /**
+         * Adds the {@link MustNotExistPropertyRule} validation for speficied properties, the properties must not exist
+         * or has a blank value.
+         *
+         * @param failureResultType
+         *         the result thype if validation fails
+         * @return this builder instance
+         */
+        public PropertyValidatorPropertyBuilder mustNotExist(PropertyValidatingResultType failureResultType) {
+            for (String propertyName : properties) {
+                parent.add(new PropertyValidationInfo(propertyName, new MustNotExistPropertyRule(), failureResultType));
             }
             return this;
         }
@@ -83,7 +109,7 @@ public class PropertyValidatorBuilder {
          *         the pattern in String format
          * @param failureResultType
          *         the result type if validation fails
-         * @return this instance
+         * @return this builder instance
          */
         public PropertyValidatorPropertyBuilder mustMatch(String pattern,
                 PropertyValidatingResultType failureResultType) {
@@ -98,7 +124,7 @@ public class PropertyValidatorBuilder {
          *         the {@link Pattern} instance
          * @param failureResultType
          *         the result type if validation fails
-         * @return this instance
+         * @return this builder instance
          */
         public PropertyValidatorPropertyBuilder mustMatch(Pattern pattern,
                 PropertyValidatingResultType failureResultType) {
@@ -110,12 +136,39 @@ public class PropertyValidatorBuilder {
         }
 
         /**
+         * Adds a custom {@link PropertyRule} validation for specified properties.
+         *
+         * @param customRule
+         *         the custom rule
+         * @param failureResultType
+         *         the result type if validation fails
+         * @return the builder instance
+         */
+        public PropertyValidatorPropertyBuilder custom(PropertyRule customRule,
+                PropertyValidatingResultType failureResultType) {
+            for (String propertyName : properties) {
+                parent.add(new PropertyValidationInfo(propertyName, customRule, failureResultType));
+            }
+            return this;
+        }
+
+        /**
          * Ends current properties builder and return back to parent {@link PropertyValidatorBuilder}.
          *
          * @return the parent instance {@link PropertyValidatorBuilder}
          */
         public PropertyValidatorBuilder and() {
             return parent;
+        }
+
+        /**
+         * Builds the {@link PropertyValidator} instance by invoking the parent {@link PropertyValidatorBuilder#build()}
+         * method.
+         *
+         * @return the built {@link PropertyValidator} instance.
+         */
+        public PropertyValidator build() {
+            return parent.build();
         }
     }
 }

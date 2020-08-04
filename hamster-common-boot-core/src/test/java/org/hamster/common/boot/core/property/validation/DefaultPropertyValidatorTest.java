@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
+import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 import static org.hamster.common.boot.core.property.validation.PropertyValidatingResultType.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -84,11 +85,11 @@ class DefaultPropertyValidatorTest {
         Properties properties = new Properties();
         properties.put("property1", "some_value");
 
-        List<PropertyValidatingResult> results = testSubject.validate(properties);
+        Map<String, List<PropertyValidatingResult>> results = testSubject.validate(properties).stream()
+                .collect(groupingBy(PropertyValidatingResult::getPropertyName));
 
-        assertEquals(1, results.size());
-        assertEquals(SUCCESS, results.get(0).getType());
-        assertEquals("some_value", results.get(0).getPropertyValue());
-
+        assertEquals(3, results.size());
+        assertEquals(SUCCESS, results.get("property1").get(0).getType());
+        assertEquals("some_value", results.get("property1").get(0).getPropertyValue());
     }
 }

@@ -44,6 +44,9 @@ public class MustMatchPropertyRule implements PropertyRule {
 
     @Override
     public Boolean apply(String s) {
+        if (s == null) {
+            return false;
+        }
         return pattern.matcher(s).matches();
     }
 }
