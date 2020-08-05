@@ -11,7 +11,7 @@
   <artifactId>hamster-common-boot-core</artifactId>
   <version>1.0-SNAPSHOT</version>
   <name>hamster-common-boot-core</name>
-  <description>Hamster Common code core module</description>
+  <description>Hamster Common Boot core module</description>
 
   <properties>
     <java.version>11</java.version>
