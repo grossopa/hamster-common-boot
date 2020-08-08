@@ -6,6 +6,7 @@
   <modules>
     <module>hamster-common-boot-core</module>
     <module>hamster-common-boot-test</module>
+    <module>hamster-common-boot-web</module>
   </modules>
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -23,6 +24,7 @@
     <java.version>11</java.version>
 
     <!-- dependencies -->
+    <commons-csv.version>1.8</commons-csv.version>
     <guava.version>29.0-jre</guava.version>
   </properties>
 
@@ -35,12 +37,19 @@
         <scope>test</scope>
       </dependency>
 
+      <!-- Guava -->
       <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
         <version>${guava.version}</version>
       </dependency>
 
+      <!-- format -->
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-csv</artifactId>
+        <version>${commons-csv.version}</version>
+      </dependency>
     </dependencies>
 
   </dependencyManagement>
@@ -59,13 +68,13 @@
     </dependency>
   </dependencies>
 
-<!--  <build>-->
-<!--    <plugins>-->
-<!--      <plugin>-->
-<!--        <groupId>org.springframework.boot</groupId>-->
-<!--        <artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--      </plugin>-->
-<!--    </plugins>-->
-<!--  </build>-->
+  <!--  <build>-->
+  <!--    <plugins>-->
+  <!--      <plugin>-->
+  <!--        <groupId>org.springframework.boot</groupId>-->
+  <!--        <artifactId>spring-boot-maven-plugin</artifactId>-->
+  <!--      </plugin>-->
+  <!--    </plugins>-->
+  <!--  </build>-->
 
 </project>
