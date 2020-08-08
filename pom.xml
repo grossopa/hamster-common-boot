@@ -6,7 +6,8 @@
   <modules>
     <module>hamster-common-boot-core</module>
     <module>hamster-common-boot-test</module>
-    <module>hamster-common-boot-web</module>
+    <module>hamster-common-boot-webflux</module>
+    <module>hamster-common-boot-sample-app</module>
   </modules>
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -30,6 +31,16 @@
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.hamster</groupId>
+        <artifactId>hamster-common-boot-core</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.hamster</groupId>
+        <artifactId>hamster-common-boot-webflux</artifactId>
+        <version>${project.version}</version>
+      </dependency>
       <dependency>
         <groupId>org.hamster</groupId>
         <artifactId>hamster-common-boot-test</artifactId>
