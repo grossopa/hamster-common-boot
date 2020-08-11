@@ -8,6 +8,7 @@
     <module>hamster-common-boot-test</module>
     <module>hamster-common-boot-webflux</module>
     <module>hamster-common-boot-sample-app</module>
+    <module>hamster-common-boot-data-jpa</module>
   </modules>
   <parent>
     <groupId>org.springframework.boot</groupId>

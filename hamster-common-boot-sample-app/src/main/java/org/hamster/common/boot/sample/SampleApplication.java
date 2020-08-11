@@ -15,6 +15,7 @@ public class SampleApplication {
 
     public static void main(String[] args) {
         SpringApplicationBuilder builder = new SpringApplicationBuilder(ApplicationConfig.class);
+        builder.properties("spring.application.name=hamster-sample");
         builder.build().run(args);
     }
 }
