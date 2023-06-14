@@ -19,7 +19,7 @@
     <java.version>11</java.version>
 
     <!-- dependencies -->
-    <guava.version>29.0-jre</guava.version>
+    <guava.version>32.0.0-jre</guava.version>
   </properties>
 
   <dependencyManagement>
